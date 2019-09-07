@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        return get_suggestions(request.form['queryroot'])
+        suggestion_list = get_suggestions(request.form['queryroot'])
     return render_template('keywords.html')
 @app.route('/welcome')
 def welcome():
