@@ -4,12 +4,12 @@ import pandas as pd
 
 
 def get_suggestions(queryroot):
-    num_results = 5
+    num_results = 10
     formatted_root = '+'.join(queryroot.split())
 
     results = []
     relevance = []
-    for suffix in string.ascii_lowercase:
+    for suffix in ' '+string.ascii_lowercase:
         formatted_query = formatted_root + '+' + suffix
         response = requests.get(f'https://suggestqueries.google.com/complete/search?client=chrome&q={formatted_query}')
         if response.json()[1] != []:
