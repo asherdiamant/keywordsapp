@@ -2,6 +2,7 @@ import requests
 import string
 import pandas as pd
 
+fivews = ['how', 'what', 'why', 'who', 'when', 'where']
 
 def get_suggestions(queryroot):
     num_results = 10
@@ -12,7 +13,14 @@ def get_suggestions(queryroot):
     for suffix in ' '+string.ascii_lowercase:
         formatted_query = formatted_root + '+' + suffix
         response = requests.get(f'https://suggestqueries.google.com/complete/search?client=chrome&q={formatted_query}')
-        if response.json()[1] != []:
+        if response.json()[1]:
+            results += response.json()[1][0:num_results]
+            relevance += response.json()[4]['google:suggestrelevance'][0:num_results]
+
+    for prefix in fivews:
+        formatted_query = prefix + '+' + formatted_root
+        response = requests.get(f'https://suggestqueries.google.com/complete/search?client=chrome&q={formatted_query}')
+        if response.json()[1]:
             results += response.json()[1][0:num_results]
             relevance += response.json()[4]['google:suggestrelevance'][0:num_results]
 
