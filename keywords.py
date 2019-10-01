@@ -24,7 +24,7 @@ def get_suggestions(queryroot):
             results += response.json()[1][0:num_results]
             relevance += response.json()[4]['google:suggestrelevance'][0:num_results]
 
-    results_url = [f'<a href=\"https://www.google.com/search?q={"+".join(kw.split())}\">{kw}</a>' for kw in results]
+    results_url = [f'<a href=\"https://www.google.com/search?q={"+".join(kw.split())}\" target="_blank">{kw}</a>' for kw in results]
     results_list = list(zip(results_url, relevance))
     sorted_results = sorted(results_list, key=lambda tup: tup[1], reverse=True)
     df = pd.DataFrame(sorted_results, columns=['keyword', 'relevance'])
